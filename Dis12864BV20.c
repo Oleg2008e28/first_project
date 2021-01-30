@@ -1018,7 +1018,61 @@ uint8_t simbol[] PROGMEM=
 	#elif (DISPLAY_CONTROL_MOD==PARALLEL_4_BITS)
 	initDisplayParallel4bitMod();
 	#elif (DISPLAY_CONTROL_MOD==PARALLEL_8_BITS)
-	initDisplayParallel8bitMod();
+	void initDisplay()
+	{
+		E_PIN_DDR|=(1<<E_PIN);
+		RW_PIN_DDR|=(1<<RW_PIN);
+		RS_PIN_DDR|=(1<<RS_PIN);
+		RESET_PIN_DDR|=(1<<RESET_PIN);
+		DB0_PIN_DDR|=(1<<DB0_PIN);
+		DB1_PIN_DDR|=(1<<DB1_PIN);
+		DB2_PIN_DDR|=(1<<DB2_PIN);
+		DB3_PIN_DDR|=(1<<DB3_PIN);
+		DB4_PIN_DDR|=(1<<DB4_PIN);
+		DB5_PIN_DDR|=(1<<DB5_PIN);
+		DB6_PIN_DDR|=(1<<DB6_PIN);
+		DB7_PIN_DDR|=(1<<DB7_PIN);
+		RESET_PIN_PORT&=~(1<<RESET_PIN);	
+		_delay_ms(50);
+		RESET_PIN_PORT|=(1<<RESET_PIN);
+		transferDisplayByte(0b00110000,COMMAND);
+		_delay_us(150);
+		transferDisplayByte(0b00110000,COMMAND);
+		_delay_us(50);
+		transferDisplayByte(0b00001100,COMMAND);
+		_delay_us(150);
+		transferDisplayByte(0b00000001,COMMAND);
+		_delay_ms(15);
+		transferDisplayByte(0b00000110,COMMAND);
+		_delay_us(75);
+		
+	}
+	void transferDisplayByte(uint8_t a, ComDat rs)
+	{
+		if ((a&0b00000001)==0)	DB0_PIN_PORT&=~(1<<DB0_PIN);
+		else					DB0_PIN_PORT|=(1<<DB0_PIN);
+		if ((a&0b00000010)==0)	DB1_PIN_PORT&=~(1<<DB1_PIN);
+		else					DB1_PIN_PORT|=(1<<DB1_PIN);
+		if ((a&0b00000100)==0)	DB2_PIN_PORT&=~(1<<DB2_PIN);
+		else					DB2_PIN_PORT|=(1<<DB2_PIN);
+		if ((a&0b00001000)==0)	DB3_PIN_PORT&=~(1<<DB3_PIN);
+		else					DB3_PIN_PORT|=(1<<DB3_PIN);
+		if ((a&0b00010000)==0)	DB4_PIN_PORT&=~(1<<DB4_PIN);
+		else					DB4_PIN_PORT|=(1<<DB4_PIN);
+		if ((a&0b00100000)==0)	DB5_PIN_PORT&=~(1<<DB5_PIN);
+		else					DB5_PIN_PORT|=(1<<DB5_PIN);
+		if ((a&0b01000000)==0)	DB6_PIN_PORT&=~(1<<DB6_PIN);
+		else					DB6_PIN_PORT|=(1<<DB6_PIN);
+		if ((a&0b10000000)==0)	DB7_PIN_PORT&=~(1<<DB7_PIN);
+		else					DB7_PIN_PORT|=(1<<DB7_PIN);
+		if (rs==COMMAND)		RS_PIN_PORT &=~(1<<RS_PIN);
+		else					RS_PIN_PORT|=(1<<RS_PIN);
+		_delay_us(20);
+		E_PIN_PORT|=(1<<E_PIN);
+		_delay_us(10);
+		E_PIN_PORT&=~(1<<E_PIN);
+		
+	}
 	#else 
 	#error "ERROR Dis12864BV20!!! DISPLAY_CONTROL_MOD is defined incorrectly."
 #endif
@@ -1198,6 +1252,4 @@ void printDisplayString(unsigned char *s, uint8_t number_string, uint8_t invers)
 
 
 void initDisplayParallel4bitMod()
-{};
-void initDisplayParallel8bitMod()
 {};

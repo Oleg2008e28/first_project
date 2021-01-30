@@ -16,31 +16,23 @@
 
 int main(void)
 {
-	
-/*
-DDRB|=(1<<2);
-PORTB|=(1<<2);*/
+
 initDisplay();
 _delay_ms(2000);
 setDisplayExtendedFunction(1,1,1);
 selectDisplayScroollOrRamAddress(0);
 clearDisplayGraphicMode();
+
 _delay_ms(10);
 
 int i=0;
 
 while(1)
 {
-
-/*
-display_print_string(s0,0,0);
-display_print_string(s1,1,0);
-display_print_string(s2,2,0);
-display_print_string(s3,3,0);
-_delay_ms(30000);*/
+	
 unsigned char a0[]={"  <НАСТРОЙКИ>\0"};
 unsigned char a1[]={"Дата/Время\0"};
-unsigned char a2[]={"Полив откл.\0"};
+unsigned char a2[]={"Полив\0"};
 unsigned char a3[]={"Откр./Закр.\0"};						//Тв=+25°
 printDisplayString(a0,0,0);
 if (i==0)
@@ -67,6 +59,11 @@ if (i>2)
 	i=0;
 }
 _delay_ms(5000);
+
+
+
+
+	
 }
 	
 

@@ -39,7 +39,7 @@ typedef enum {COMMAND, DATA} ComDat;		//Множество определяющее тип данных: либо 
 /***************************************************************************************************************************************************************************************/
 /*														Настройки для работы по SPI, реализованному аппаратно.									 									   */
 /***************************************************************************************************************************************************************************************/
-#define DISPLAY_CONTROL_MOD BUILT_SPI		//Значение макроса DISPLAY_CONTROL_MOD определяет режим управления дисплеем.
+//#define DISPLAY_CONTROL_MOD BUILT_SPI		//Значение макроса DISPLAY_CONTROL_MOD определяет режим управления дисплеем.
 
 #define SPI_SCK			PB5
 #define SPI_MISO		PB4
@@ -56,6 +56,66 @@ typedef enum {COMMAND, DATA} ComDat;		//Множество определяющее тип данных: либо 
 #define BUILT_SPI		1					//Константа режима работы по протоколу SPI, реализованному аппаратно (не изменять).
 #define PARALLEL_4_BITS	2					//Константа режима работы по 4-х битному параллельному интерфейсу. (не изменять).
 #define PARALLEL_8_BITS	3					//Константа режима работы по 8-и битному параллельному интерфейсу. (не изменять).
+
+
+/***************************************************************************************************************************************************************************************/
+
+/***************************************************************************************************************************************************************************************/
+/*														Настройки для работы по 8-ми битному параллельному интерфейсу.									 									   */
+/***************************************************************************************************************************************************************************************/
+#define DISPLAY_CONTROL_MOD PARALLEL_8_BITS
+#if (DISPLAY_CONTROL_MOD==PARALLEL_8_BITS)
+
+#define E_PIN PD6
+#define E_PIN_PORT PORTD
+#define E_PIN_DDR  DDRD
+
+#define RW_PIN PD7
+#define	RW_PIN_PORT PORTD
+#define RW_PIN_DDR DDRD
+
+#define RS_PIN PB0
+#define RS_PIN_PORT PORTB
+#define RS_PIN_DDR DDRB
+
+#define RESET_PIN PD1
+#define RESET_PIN_PORT PORTD
+#define RESET_PIN_DDR  DDRD
+
+#define DB0_PIN PD5
+#define	DB0_PIN_PORT PORTD
+#define DB0_PIN_DDR DDRD
+
+#define DB1_PIN PC0
+#define	DB1_PIN_PORT PORTC
+#define DB1_PIN_DDR DDRC
+
+#define DB2_PIN PC1
+#define	DB2_PIN_PORT PORTC
+#define DB2_PIN_DDR DDRC
+
+#define DB3_PIN PC2
+#define	DB3_PIN_PORT PORTC
+#define DB3_PIN_DDR DDRC
+
+#define DB4_PIN PC3
+#define	DB4_PIN_PORT PORTC
+#define DB4_PIN_DDR DDRC
+
+#define DB5_PIN PC4
+#define	DB5_PIN_PORT PORTC
+#define DB5_PIN_DDR DDRC
+
+#define DB6_PIN PC5
+#define	DB6_PIN_PORT PORTC
+#define DB6_PIN_DDR DDRC
+
+#define DB7_PIN PD0
+#define	DB7_PIN_PORT PORTD
+#define DB7_PIN_DDR DDRD
+#endif //PARALLEL_8_BITS
+/***************************************************************************************************************************************************************************************/
+
 
 void initDisplay();
 /*Установка настроек портов ввода вывода. Требуется использовать эту функцию при старте проекта для инициализации.*/
